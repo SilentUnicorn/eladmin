@@ -671,6 +671,7 @@ CREATE TABLE `sys_user` (
   UNIQUE KEY `uniq_email` (`email`),
   KEY `FK5rwmryny6jthaaxkogownknqp` (`dept_id`) USING BTREE,
   KEY `FKpq2dhypk2qgt68nauh2by22jb` (`avatar_name`) USING BTREE,
+  KEY `FKpq2dhypk2qgt68nauh2by22jb` (`avatar_name`) USING BTREE,
   KEY `inx_enabled` (`enabled`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统用户';
 
@@ -821,5 +822,78 @@ CREATE TABLE `tool_qiniu_content` (
 -- ----------------------------
 BEGIN;
 COMMIT;
+
+-- ----------------------------
+-- Table structure for a_attendance
+-- ----------------------------
+DROP TABLE IF EXISTS `a_attendance`;
+CREATE TABLE `a_attendance` (
+  `attendance_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `employee_id` bigint(20) DEFAULT NULL COMMENT '员工/访客id',
+  `type` int(11) DEFAULT NULL COMMENT '类型：1正式员工，2访客',
+  `extend` text DEFAULT NULL COMMENT '扩展字段json，{"temperature":"36.5","photo":""}',
+  `operate_type` int(11) DEFAULT NULL COMMENT '操作类型：1进，2出',
+  `create_by` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`attendance_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='考勤';
+
+-- ----------------------------
+-- Table structure for a_employee
+-- ----------------------------
+DROP TABLE IF EXISTS `a_employee`;
+CREATE TABLE `a_employee` (
+  `employee_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门',
+  `title_id` bigint(20) DEFAULT NULL COMMENT '职务',
+  `employee_no` varchar(16) DEFAULT NULL COMMENT '工号',
+  `name` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `gender` varchar(2) DEFAULT NULL COMMENT '性别',
+  `phone` varchar(255) DEFAULT NULL COMMENT '手机号码',
+  `emergency_phone` varchar(255) DEFAULT NULL COMMENT '紧急联系人电话',
+  `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
+  `id_no` varchar(255) DEFAULT NULL COMMENT '身份证号',
+  `id_photo` varchar(255) DEFAULT NULL COMMENT '证件照',
+  `enabled` bigint(20) DEFAULT NULL COMMENT '状态：1启用、0禁用',
+  `create_by` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`employee_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='员工';
+
+-- ----------------------------
+-- Table structure for a_title
+-- ----------------------------
+DROP TABLE IF EXISTS `a_title`;
+CREATE TABLE `a_title` (
+  `title_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `title_name` varchar(255) DEFAULT NULL COMMENT '职务名称',
+  `create_by` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`title_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='职务';
+
+-- ----------------------------
+-- Table structure for a_visitor
+-- ----------------------------
+DROP TABLE IF EXISTS `a_visitor`;
+CREATE TABLE `a_visitor` (
+  `visitor_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `visited_id` bigint(20) DEFAULT NULL COMMENT '被拜访人id',
+  `name` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `phone` varchar(255) DEFAULT NULL COMMENT '手机号码',
+  `id_no` varchar(255) DEFAULT NULL COMMENT '身份证号',
+  `id_photo` varchar(255) DEFAULT NULL COMMENT '证件照',
+  `create_by` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`visitor_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='访客';
 
 SET FOREIGN_KEY_CHECKS = 1;
